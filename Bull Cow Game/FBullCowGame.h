@@ -9,24 +9,37 @@ struct FBullCowCount {
 	int32 Cows = 0;
 };
 
+enum class EGuessStatus {
+	Invalid_Status,
+	OK,
+	Not_Isogram,
+	Wrong_Length,
+	Not_Lowercase
+};
+
+
 class FBullCowGame {
 public:
 	FBullCowGame();
 
 	int32 GetMaxTries() const;
 	int32 GetCurrentTry() const;
+	int32 GetHiddenWordLength() const;
 	bool IsGameWon() const;
+	EGuessStatus CheckGuessValidity(FString) const;
 
 	void Reset(); //TODO(dane) make a better return
-	bool CheckGuessValidity(FString);
-	FBullCowCount SubmitGuess(FString);
-	
+	FBullCowCount SubmitValidGuess(FString);
+
 
 private:
 	// See constructor for initialization
 	int32 MyCurrentTry;
-	int32 MyMaxTries; 
+	int32 MyMaxTries;
 	FString MyHiddenWord;
-	bool IsIsogram;
+	bool bGameIsWon;
+
+	bool IsIsogram(FString) const;
+	bool IsLowercase(FString) const;
 
 };
